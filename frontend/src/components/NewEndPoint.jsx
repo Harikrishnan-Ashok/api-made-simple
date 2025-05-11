@@ -1,5 +1,6 @@
-import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
+//wails fn
+import { CallCreateNewEndpoint } from "../../wailsjs/go/main/App";
+//mui stuffs
 import {
   Stack,
   Button,
@@ -7,11 +8,18 @@ import {
   TextField,
 } from "@mui/material";
 
+//utils
+import { Controller, useForm } from "react-hook-form";
+import { useState } from "react";
+
 export default function NewEndPoint() {
   const { register, control, reset, handleSubmit } = useForm();
   const [showForm, setShowForm] = useState(false);
 
-  const handleStartListening = (data) => console.log(data);
+  const handleStartListening =async(data) => {
+    const res= await CallCreateNewEndpoint(data)
+		console.log(res)
+	};
 
   const handleReset = () => {
     reset({
@@ -75,7 +83,7 @@ export default function NewEndPoint() {
                   type="number"
                   label="Status Code"
                   placeholder="200"
-                  {...register("successStatus", { required: true })}
+                  {...register("successStatus", { required: true,valueAsNumber:true })}
                 />
               </Stack>
               <TextField
@@ -94,7 +102,7 @@ export default function NewEndPoint() {
                 <TextField
                   label="Status Code"
                   placeholder="400"
-                  {...register("errorStatus", { required: true })}
+                  {...register("errorStatus", { required: true,valueAsNumber: true })}
                 />
               </Stack>
               <TextField
