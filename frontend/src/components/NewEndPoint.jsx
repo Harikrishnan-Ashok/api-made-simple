@@ -1,5 +1,6 @@
 //wails fn
 import { CallCreateNewEndpoint } from "../../wailsjs/go/main/App";
+
 //mui stuffs
 import {
   Stack,
@@ -23,7 +24,7 @@ export default function NewEndPoint() {
 
   const handleReset = () => {
     reset({
-      endpoint: "",
+      path: "",
       errorResponse: "",
       errorStatus: "",
       method: "",
@@ -68,7 +69,7 @@ export default function NewEndPoint() {
             <TextField
               fullWidth
               placeholder="Write the API Endpoint e.g., /home"
-              {...register("endpoint", { required: true })}
+              {...register("path", { required: true })}
             />
           </Stack>
 

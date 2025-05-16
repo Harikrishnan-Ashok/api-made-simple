@@ -6,7 +6,7 @@ import (
 )
 
 func CreateNewEndpoint(endpoint model.NewEndpoint)string{
-  return fmt.Sprintf("Endpoint created %s",endpoint.Endpoint)
+  return fmt.Sprintf("Endpoint created %s",endpoint.Path)
 }
 
 

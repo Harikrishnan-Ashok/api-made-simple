@@ -3,7 +3,7 @@ export namespace model {
 	export class NewEndpoint {
 	    id: string;
 	    method: string;
-	    endpoint: string;
+	    path: string;
 	    errorStatus: number;
 	    errorResponse: string;
 	    successStatus: number;
@@ -17,7 +17,7 @@ export namespace model {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.id = source["id"];
 	        this.method = source["method"];
-	        this.endpoint = source["endpoint"];
+	        this.path = source["path"];
 	        this.errorStatus = source["errorStatus"];
 	        this.errorResponse = source["errorResponse"];
 	        this.successStatus = source["successStatus"];
