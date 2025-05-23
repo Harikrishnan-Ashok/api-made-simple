@@ -20,6 +20,7 @@ export default function NewEndPoint() {
   const handleStartListening =async(data) => {
     const res= await CallCreateNewEndpoint(data)
 		console.log(res)
+		handleReset()
 	};
 
   const handleReset = () => {
