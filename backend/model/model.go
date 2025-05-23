@@ -9,3 +9,7 @@ type NewEndpoint struct {
     SuccessStatus    int    `json:"successStatus"`
     SuccessResponse  string `json:"successResponse"`
 }
+
+type EndpointStore struct {
+	ListOfEndpoints []NewEndpoint `json:"listOfEndpoints"`
+}

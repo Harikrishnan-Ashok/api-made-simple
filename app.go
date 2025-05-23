@@ -28,3 +28,7 @@ func (a *App)CallCreateNewEndpoint(endpoint model.NewEndpoint)string{
   return helper.CreateNewEndpoint(endpoint)
 }
 
+// func to get the list of endpoints 
+func (a *App)CallLoadEndpoints()model.EndpointStore{
+	return helper.LoadEndpointStore()
+}

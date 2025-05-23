@@ -5,3 +5,7 @@
 export function CallCreateNewEndpoint(arg1) {
   return window['go']['main']['App']['CallCreateNewEndpoint'](arg1);
 }
+
+export function CallLoadEndpoints() {
+  return window['go']['main']['App']['CallLoadEndpoints']();
+}

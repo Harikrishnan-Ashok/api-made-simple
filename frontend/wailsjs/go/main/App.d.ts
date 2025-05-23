@@ -3,3 +3,5 @@
 import {model} from '../models';
 
 export function CallCreateNewEndpoint(arg1:model.NewEndpoint):Promise<string>;
+
+export function CallLoadEndpoints():Promise<model.EndpointStore>;

@@ -8,10 +8,6 @@ import (
 	"path/filepath"
 )
 
-type EndpointStore struct {
-	ListOfEndpoints []model.NewEndpoint `json:"listOfEndpoints"`
-}
-
 func CreateNewEndpoint(endpoint model.NewEndpoint) string {
 	// Setup paths
 	homePath, err := os.UserHomeDir()
@@ -30,7 +26,7 @@ func CreateNewEndpoint(endpoint model.NewEndpoint) string {
 	}
 
 	// Read existing file (if any)
-	var store EndpointStore
+	var store model.EndpointStore
 	if fileData, err := os.ReadFile(endpointFilePath); err == nil && len(fileData) > 0 {
 		err = json.Unmarshal(fileData, &store)
 		if err != nil {
