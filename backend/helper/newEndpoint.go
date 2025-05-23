@@ -8,43 +8,53 @@ import (
 	"path/filepath"
 )
 
+type EndpointStore struct {
+	ListOfEndpoints []model.NewEndpoint `json:"listOfEndpoints"`
+}
+
 func CreateNewEndpoint(endpoint model.NewEndpoint) string {
-	// Marshalling the data
-	jsonData, err := json.Marshal(endpoint)
+	// Setup paths
+	homePath, err := os.UserHomeDir()
 	if err != nil {
-		fmt.Println("An error occurred while Marshalling:", err)
-		return "Marshalling Error"
+		fmt.Println("Error getting home directory:", err)
+		return "HomeDir Error"
 	}
+	rootPath := filepath.Join(homePath, "ApiMadeSimple")
+	endpointFilePath := filepath.Join(rootPath, "endpoint.json")
 
-	//prepping file paths
-	homePath,err:=os.UserHomeDir()
-	  if err!=nil{
-      fmt.Println("an error occured while getting the home directory",err)
-		}
-	rootPath:=filepath.Join(homePath,"ApiMadeSimple")
-	endpointFilePath:=filepath.Join(rootPath,"endpoint.json")
-
-	// Create the directory if it doesn't exist
+	// Create dir if not exist
 	err = os.MkdirAll(rootPath, os.ModePerm)
 	if err != nil {
 		fmt.Println("Error creating directory:", err)
 		return "Directory Creation Error"
 	}
 
-	// Create the file
-	file, err := os.Create(endpointFilePath)
-	if err != nil {
-		fmt.Println("Error creating file:", err)
-		return "File Creation Error"
+	// Read existing file (if any)
+	var store EndpointStore
+	if fileData, err := os.ReadFile(endpointFilePath); err == nil && len(fileData) > 0 {
+		err = json.Unmarshal(fileData, &store)
+		if err != nil {
+			fmt.Println("Error unmarshalling:", err)
+			return "Unmarshal Error"
+		}
 	}
-	defer file.Close() // Always close the file when done
 
-	// Write JSON data to the file
-	_, err = file.WriteString(string(jsonData))
+	// Append new endpoint
+	store.ListOfEndpoints = append(store.ListOfEndpoints, endpoint)
+
+	// Marshal updated store
+	updatedData, err := json.MarshalIndent(store, "", "  ")
+	if err != nil {
+		fmt.Println("Error marshalling:", err)
+		return "Marshal Error"
+	}
+
+	// Write back to file
+	err = os.WriteFile(endpointFilePath, updatedData, 0644)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
-		return "File Write Error"
+		return "Write Error"
 	}
 
-	return fmt.Sprintf("Endpoint Created: %s", string(jsonData))
+	return "Endpoint Created Successfully"
 }
