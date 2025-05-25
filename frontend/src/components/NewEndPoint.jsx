@@ -11,9 +11,9 @@ import {
 
 //utils
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function NewEndPoint() {
+export default function NewEndPoint({type="new",data={}}) {
   const { register, control, reset, handleSubmit } = useForm();
   const [showForm, setShowForm] = useState(false);
 
@@ -39,12 +39,28 @@ export default function NewEndPoint() {
     console.log(data);
   };
 
+	useEffect(()=>{
+    if(type==="loadPrev"){
+    reset({
+      path: data.path,
+      errorResponse: data.errorResponse,
+      errorStatus: data.errorStatus,
+      method: data.method,
+      successResponse: data.successResponse,
+      successStatus: data.successStatus
+    });
+			setShowForm(true)
+		}
+	},[])
+
   return (
     <>
       {showForm ? (
         <Stack gap={3} mt={2}>
           <Stack direction={"row"} gap={2}>
-            <Button variant="contained">Method</Button>
+					  <Button disableRipple disableFocusRipple disableTouchRipple variant="contained">
+				      Method
+				    </Button>
             <Controller
               name="method"
               control={control}
@@ -66,7 +82,8 @@ export default function NewEndPoint() {
 
           {/* Endpoint */}
           <Stack direction={"row"} gap={2}>
-            <Button variant="contained">Endpoint</Button>
+					  <Button disableRipple   disableFocusRipple disableTouchRipple variant="contained">
+				    Endpoint</Button>
             <TextField
               fullWidth
               placeholder="Write the API Endpoint e.g., /home"
@@ -78,7 +95,7 @@ export default function NewEndPoint() {
           <Stack direction={"row"} gap={2}>
             <Stack gap={2} flexGrow={1}>
               <Stack direction={"row"} gap={2}>
-                <Button variant="contained" color="success">
+					      <Button color="success" disableRipple   disableFocusRipple disableTouchRipple variant="contained">
                   Success
                 </Button>
                 <TextField
@@ -98,7 +115,7 @@ export default function NewEndPoint() {
 
             <Stack gap={2} flexGrow={1}>
               <Stack direction={"row"} gap={2}>
-                <Button variant="contained" color="error">
+					      <Button color="error" disableRipple disableFocusRipple disableTouchRipple variant="contained">
                   Error
                 </Button>
                 <TextField
@@ -118,6 +135,7 @@ export default function NewEndPoint() {
 
           {/* Action Buttons */}
           <Stack m={2} direction={"row"} justifyContent={"end"} gap={2}>
+				    {type==="new"&&
             <Button
               onClick={() => setShowForm(false)}
               variant="contained"
@@ -125,7 +143,8 @@ export default function NewEndPoint() {
             >
               Cancel Endpoint
             </Button>
-            <Button onClick={handleReset} variant="contained" color="secondary">
+						}
+				    <Button onClick={handleReset} variant="contained" color="secondary">
               Reset
             </Button>
             <Button
