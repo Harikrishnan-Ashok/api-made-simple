@@ -13,7 +13,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-export default function NewEndPoint({type="new",data={}}) {
+export default function NewEndPoint({type="new",data={},setRefreshList}) {
   const { register, control, reset, handleSubmit } = useForm();
   const [showForm, setShowForm] = useState(false);
 
@@ -21,6 +21,7 @@ export default function NewEndPoint({type="new",data={}}) {
     const res= await CallCreateNewEndpoint(data)
 		console.log(res)
 		handleReset()
+		setRefreshList((curr)=>curr+1)
 	};
 
   const handleReset = () => {

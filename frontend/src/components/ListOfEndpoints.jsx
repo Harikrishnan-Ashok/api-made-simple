@@ -4,7 +4,7 @@ import { Button, IconButton, List, ListItem, Paper, Stack, Tooltip, Typography }
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import NewEndPoint from "./NewEndPoint";
 
-export default function ListOfEndpoints() {
+export default function ListOfEndpoints({refreshList,setRefreshList}) {
   const [listOfEndpoints, setListOfEndpoints] = useState([]);
   const [showExpand, setShowExpand] = useState(false);
 	const [expandedIndex,setExpandedIndex]=useState(-1)
@@ -28,7 +28,7 @@ export default function ListOfEndpoints() {
         console.error("Failed to load endpoints:", err);
         setListOfEndpoints([]);
       });
-  }, []);
+  }, [refreshList]);
 
   return (
     <>
@@ -72,7 +72,7 @@ export default function ListOfEndpoints() {
       </Stack>
 
       {expandedIndex === index && (
-        <NewEndPoint type="loadPrev" data={item} />
+        <NewEndPoint type="loadPrev" data={item} setRefreshList={setRefreshList} />
       )}
     </Paper>
   </ListItem>
